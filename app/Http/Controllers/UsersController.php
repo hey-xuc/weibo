@@ -34,4 +34,26 @@ class UsersController extends Controller
         session()->flash('success', '欢迎，您将开启一段laravel之旅');
         return redirect()->route('users.show', $user);
     }
+
+    public function edit(User $user){
+        return view('users.edit', compact('user'));
+    }
+
+    public function update(User $user, Request $request){
+        $this->validate($request, [
+            'name' => 'required|max:50',
+            'password' => 'required|confirmation|min:6'
+        ]);
+
+        $data = [];
+        $data['name'] = $request->name;
+        if ($request->password){
+            $data['password'] = bcrypt($request->password);
+        }
+        $user->update($data);
+
+        session()->flash('success', '个人资料修改成功');
+
+        return redirect()->route('users.show', $user->id);
+    }
 }
