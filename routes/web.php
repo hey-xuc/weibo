@@ -27,3 +27,6 @@ Route::delete('logout', 'SessionController@destroy')->name('logout');
 
 # 用户编辑
 Route::get('/users/{user}/edit', 'UsersController@edit')->name('users.edit');
+
+# 验证邮箱
+Route::get('signup/confirm/{token}', 'UsersController@confirmEmail')->name('confirm_email');
