@@ -40,3 +40,7 @@ Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('passw
 # 粉丝与关注列表
 Route::get('/users/{user}/followings', 'UsersController@followings')->name('users.followings');
 Route::get('/users/{user}/followers', 'UsersController@followers')->name('users.followers');
+
+# 关注与取关按钮
+Route::post('/users/followers/{user}', 'FollowerController@store')->name('followers.store');
+Route::delete('/users/followers/{user}', 'FollowerController@destroy')->name('followers.destroy');

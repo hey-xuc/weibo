@@ -47,6 +47,14 @@ class User extends Authenticatable
         });
     }
 
+    public function feed(){
+        $user_ids = $this->followings->pluck('id')->toArray();
+        array_push($user_ids, $this->id);
+        return Status::whereIn('user_id', $user_ids)
+            ->with('user')
+            ->orderBy('created_at', 'desc');
+    }
+
     public function gravatar($size = '100'){
 //        dd($this);
         $hash = md5(strtolower(trim($this->email)));
