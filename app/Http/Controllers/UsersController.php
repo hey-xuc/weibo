@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-use Mail;
+use Illuminate\Support\Facades\Mail;
 
 class UsersController extends Controller
 {
@@ -71,13 +71,11 @@ class UsersController extends Controller
     public function sendEmailConfirmationTo($user){
         $view = 'emails.confirm';
         $data = compact('user');
-        $from = 'summer@example.com';
-        $name = 'Summer';
         $to = $user->email;
-        $subject = '感谢注册 Weibo 应用！请确认你的邮箱。';
+        $subject = "感谢注册 Weibo 应用，请确认你的邮箱。";
 
-        Mail::send($view, $data, function ($message) use ($from, $name, $to, $subject){
-            $message->from($from, $name)->to($to)->subject($subject);
+        Mail::send($view, $data, function ($message) use ($to, $subject){
+            $message->to($to)->subject($subject);
         });
     }
 
