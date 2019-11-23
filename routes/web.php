@@ -44,3 +44,6 @@ Route::get('/users/{user}/followers', 'UsersController@followers')->name('users.
 # 关注与取关按钮
 Route::post('/users/followers/{user}', 'FollowerController@store')->name('followers.store');
 Route::delete('/users/followers/{user}', 'FollowerController@destroy')->name('followers.destroy');
+
+# 发布删除微博
+Route::resource('statuses', 'StatusesController', ['only' => ['store', 'destroy']]);

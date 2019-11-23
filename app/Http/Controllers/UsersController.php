@@ -40,11 +40,15 @@ class UsersController extends Controller
 
     //
     public function create(){
-        return view('users.create');
+        return view('users.confirmEmail');
     }
 
     public function show(User $user){
-        return view('users.show', compact('user'));
+        $statuses = $user->statuses()
+            ->orderBy('created_at', 'desc')
+            ->paginate(30);
+
+        return view('users.show', compact('user', 'statuses'));
     }
 
     public function store(Request $request){

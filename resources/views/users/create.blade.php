@@ -25,7 +25,7 @@
 
                     <div class="form-group">
                         <label for="password">密码：</label>
-                        <input type="passsword" name="password" class="form-control" value="{{ old('passsword') }}">
+                        <input type="password" name="password" class="form-control" value="{{ old('passsword') }}">
                     </div>
 
                     <div class="form-group">
