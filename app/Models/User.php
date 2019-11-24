@@ -51,7 +51,8 @@ class User extends Authenticatable
         return $this->hasMany(Status::class);
     }
 
-    public function feed(){
+    public function feed()
+    {
         $user_ids = $this->followings->pluck('id')->toArray();
         array_push($user_ids, $this->id);
         return Status::whereIn('user_id', $user_ids)
@@ -65,29 +66,34 @@ class User extends Authenticatable
         return "http://www.gravatar.com/avatar/$hash?s=$size";
     }
 
-    public function followers(){
-        return $this->belongsTo(User::class, 'followers', 'user_id', 'follower_id');
+    public function followers()
+    {
+        return $this->belongsToMany(User::Class, 'followers', 'user_id', 'follower_id');
     }
 
-    public function followings(){
-        return $this->belongsToMany(User::class, 'followers', 'follower_id', 'user_id');
+    public function followings()
+    {
+        return $this->belongsToMany(User::Class, 'followers', 'follower_id', 'user_id');
     }
 
-    public function follow($user_ids){
-        if (!is_array($user_ids)){
+    public function follow($user_ids)
+    {
+        if ( ! is_array($user_ids)) {
             $user_ids = compact('user_ids');
         }
         $this->followings()->sync($user_ids, false);
     }
 
-    public function unfollow($user_ids){
-        if (!is_array($user_ids)){
+    public function unfollow($user_ids)
+    {
+        if ( ! is_array($user_ids)) {
             $user_ids = compact('user_ids');
         }
         $this->followings()->detach($user_ids);
     }
 
-    public function isFollowing($user_id){
-        return $this->followings()->contains($user_id);
+    public function isFollowing($user_id)
+    {
+        return $this->followings->contains($user_id);
     }
 }
